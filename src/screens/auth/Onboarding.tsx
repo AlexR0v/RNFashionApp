@@ -1,27 +1,20 @@
-import { useNavigation }                from '@react-navigation/native'
-import React, { FC, useRef }            from 'react'
-import { Dimensions, StyleSheet, View } from 'react-native'
+import { useNavigation }                       from '@react-navigation/native'
+import React, { FC, useRef }                   from 'react'
+import { Dimensions, Image, StyleSheet, View } from 'react-native'
 import Animated, {
+  Extrapolation,
+  interpolate,
   interpolateColor,
   useAnimatedScrollHandler,
   useAnimatedStyle,
   useSharedValue
-}                                       from 'react-native-reanimated'
-import {
-  Dot,
-  Slide,
-  Subslide
-}                                       from '../../components/onboarding'
-import {
-  SLIDE_HEIGHT
-}                                       from '../../components/onboarding/Slide'
-import { AuthScreenRouteProp }          from '../../types'
+}                                              from 'react-native-reanimated'
+import { Dot, Slide, Subslide }                from '../../components/onboarding'
+import { SLIDE_HEIGHT }                        from '../../components/onboarding/Slide'
+import { AuthScreenRouteProp }                 from '../../types'
+import { Box }                                 from '../../ui'
 
 const BORDER_RADIUS = 75
-
-interface OnboardingProps {
-
-}
 
 const { width } = Dimensions.get('window')
 
@@ -60,7 +53,7 @@ const slides = [
   }
 ]
 
-const Onboarding: FC<OnboardingProps> = () => {
+const Onboarding: FC = () => {
 
   const { navigate } = useNavigation<AuthScreenRouteProp>()
 
@@ -92,8 +85,38 @@ const Onboarding: FC<OnboardingProps> = () => {
   })
 
   return (
-    <View style={styles.container}>
+    <Box
+      flex={1}
+      bg='white'
+    >
       <Animated.View style={[styles.slider, aStyle]}>
+        {
+          slides.map((slide, index) => {
+            const rOpacity = useAnimatedStyle(() => {
+              const opacity = interpolate(
+                x.value,
+                [(index - 0.5) * width, index * width, (index + 0.5) * width],
+                [0, 1, 0],
+                Extrapolation.CLAMP
+              )
+              return {
+                opacity
+              }
+            })
+            return (
+              <Animated.View
+                key={index}
+                style={[styles.underlay, rOpacity]}
+              >
+                <Image
+                  source={slide.picture}
+                  style={styles.picture}
+                  resizeMode='contain'
+                />
+              </Animated.View>
+            )
+          })
+        }
         <Animated.ScrollView
           horizontal
           ref={scrollRef}
@@ -109,17 +132,18 @@ const Onboarding: FC<OnboardingProps> = () => {
               <Slide
                 title={slide.title}
                 right={slide.right}
-                picture={slide.picture}
                 key={slide.title}
               />
             ))
           }
         </Animated.ScrollView>
       </Animated.View>
-      <View style={styles.footer}>
+      <Box flex={1}>
         <Animated.View style={[{ ...StyleSheet.absoluteFillObject }, aStyle]}>
-          <View
-            style={styles.footerContent}
+          <Box
+            bg='white'
+            flex={1}
+            borderTopLeftRadius='xxxl'
           >
             <View style={styles.pagination}>
               {
@@ -161,29 +185,17 @@ const Onboarding: FC<OnboardingProps> = () => {
                 ))
               }
             </Animated.View>
-          </View>
+          </Box>
         </Animated.View>
-      </View>
-    </View>
+      </Box>
+    </Box>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ffffff'
-  },
   slider: {
     height: SLIDE_HEIGHT,
     borderBottomRightRadius: BORDER_RADIUS
-  },
-  footer: {
-    flex: 1
-  },
-  footerContent: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-    borderTopLeftRadius: BORDER_RADIUS
   },
   pagination: {
     ...StyleSheet.absoluteFillObject,
@@ -191,6 +203,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row'
+  },
+  picture: {
+    ...StyleSheet.absoluteFillObject,
+    width: undefined,
+    height: undefined
+  },
+  underlay: {
+    ...StyleSheet.absoluteFillObject
   }
 })
 

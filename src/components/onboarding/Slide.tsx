@@ -1,17 +1,17 @@
-import React, { FC }                                 from 'react'
-import { Dimensions, Image, StyleSheet, Text, View } from 'react-native'
+import React, { FC }  from 'react'
+import { Dimensions } from 'react-native'
+import { Box, Text }  from '../../ui'
 
 interface SlideProps {
   title: string
   right?: boolean
-  picture: number
 }
 
 const { width, height } = Dimensions.get('window')
 
 export const SLIDE_HEIGHT = 0.61 * height
 
-const Slide: FC<SlideProps> = ({ title, right, picture }) => {
+const Slide: FC<SlideProps> = ({ title, right }) => {
 
   const transform = [
     { translateY: (SLIDE_HEIGHT - 100) / 2 },
@@ -20,45 +20,17 @@ const Slide: FC<SlideProps> = ({ title, right, picture }) => {
   ]
 
   return (
-    <View style={styles.container}>
-      <View style={styles.underlay}>
-        <Image
-          source={picture}
-          style={styles.picture}
-          resizeMode='contain'
-        />
-      </View>
-      <View style={[styles.titleContainer, { transform }]}>
-        <Text style={styles.title}>{title}</Text>
-      </View>
-    </View>
+    <Box width={width}>
+      <Box
+        height={100}
+        justifyContent='center'
+        style={{ transform }}
+      >
+        <Text variant='hero'>{title}</Text>
+      </Box>
+    </Box>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width
-  },
-  titleContainer: {
-    height: 100,
-    justifyContent: 'center'
-  },
-  title: {
-    fontSize: 80,
-    lineHeight: 80,
-    color: '#ffffff',
-    fontFamily: 'SFProText-Bold',
-    textAlign: 'center'
-  },
-  picture: {
-    ...StyleSheet.absoluteFillObject,
-    width: undefined,
-    height: undefined
-  },
-  underlay: {
-    ...StyleSheet.absoluteFillObject
-  }
-})
 
 export default Slide
 

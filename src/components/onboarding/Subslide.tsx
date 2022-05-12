@@ -1,6 +1,5 @@
-import React, { FC }              from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { Button }                 from '../../ui'
+import React, { FC }         from 'react'
+import { Box, Button, Text } from '../../ui'
 
 interface SubslideProps {
   description: string,
@@ -11,40 +10,29 @@ interface SubslideProps {
 
 const Subslide: FC<SubslideProps> = ({ subtitle, description, last, onPress }) => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.subtitle}>{subtitle}</Text>
-      <Text style={styles.description}>{description}</Text>
+    <Box
+      flex={1}
+      justifyContent='center'
+      alignItems='center'
+      padding='2xl'
+    >
+      <Text
+        marginBottom='m'
+        variant='title2'
+      >{subtitle}</Text>
+      <Text
+        marginBottom='xl'
+        textAlign='center'
+        variant='body'
+      >{description}</Text>
       <Button
         label={last ? 'Let`s get started' : 'Next'}
         variant={last ? 'primary' : 'default'}
         onPress={onPress}
       />
-    </View>
+    </Box>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 44
-  },
-  subtitle: {
-    fontFamily: 'SFProText-Semibold',
-    fontSize: 24,
-    marginBottom: 12,
-    color: '#0c0d34'
-  },
-  description: {
-    fontFamily: 'SFProText-Regular',
-    fontSize: 16,
-    lineHeight: 24,
-    color: '#0c0d34',
-    textAlign: 'center',
-    marginBottom: 40
-  }
-})
 
 export default Subslide
 
