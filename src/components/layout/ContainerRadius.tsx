@@ -1,5 +1,6 @@
 import React, { FC }                                from 'react'
 import { Dimensions, Image, StatusBar, StyleSheet } from 'react-native'
+import { KeyboardAwareScrollView }                  from 'react-native-keyboard-aware-scroll-view'
 import { useSafeAreaInsets }                        from 'react-native-safe-area-context'
 import { useKeyboardVisible }                       from '../../hooks'
 import { Box }                                      from '../../ui'
@@ -58,7 +59,9 @@ const ContainerRadius: FC<ContainerRightRadiusProps> = ({ children, footer, left
           bg='white'
           flex={1}
         >
-          {children}
+          <KeyboardAwareScrollView>
+            {children}
+          </KeyboardAwareScrollView>
         </Box>
       </Box>
       {

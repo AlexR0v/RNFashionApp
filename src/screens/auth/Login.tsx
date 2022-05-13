@@ -1,12 +1,8 @@
 import React, { FC }                               from 'react'
 import { ContainerRadius, LoginFooter, LoginForm } from '../../components'
-import { useKeyboardVisible }                      from '../../hooks'
 import { Box, Text }                               from '../../ui'
 
 const Login: FC = () => {
-
-  const isKeyboardVisible = useKeyboardVisible()
-
   return (
     <ContainerRadius
       footer={
@@ -17,14 +13,11 @@ const Login: FC = () => {
         />}
     >
       <Box padding='xl'>
-        {
-          isKeyboardVisible ? null :
-            <Text
-              textAlign='center'
-              variant='title2'
-              marginBottom='l'
-            >Welcome back</Text>
-        }
+        <Text
+          textAlign='center'
+          variant='title2'
+          marginBottom='l'
+        >Welcome back</Text>
         <Text
           textAlign='center'
           variant='body'

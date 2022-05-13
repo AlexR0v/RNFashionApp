@@ -1,20 +1,28 @@
-import { Formik }                                 from 'formik'
-import React, { FC }                              from 'react'
-import * as Yup                                   from 'yup'
-import { useNavigation, useTheme }                from '../../hooks'
-import { Box, Button, Checkbox, Text, TextInput } from '../../ui'
+import { Formik }                 from 'formik'
+import React, { FC }              from 'react'
+import * as Yup                   from 'yup'
+import { useTheme }               from '../../hooks'
+import { Box, Button, TextInput } from '../../ui'
 
-const LoginSchema = Yup.object().shape({
+const RegisterSchema = Yup.object().shape({
   password: Yup.string()
     .min(6, 'Too Short!')
     .max(16, 'Too Long!')
     .required('Required'),
+  confirm: Yup.string()
+    .min(6)
+    .when('password', {
+      is: (val: string) => (!!(val && val.length > 0)),
+      then: Yup.string().oneOf(
+        [Yup.ref('password')],
+        'Both password need to be the same'
+      )
+    })
+    .required('Confirm Password Required'),
   email: Yup.string().email('Invalid email').required('Required')
 })
 
-const LoginForm: FC = () => {
-
-  const { navigate } = useNavigation()
+const RegisterForm: FC = () => {
 
   const theme = useTheme()
 
@@ -24,9 +32,9 @@ const LoginForm: FC = () => {
 
   return (
     <Formik
-      initialValues={{ email: '', password: '', remember: false }}
+      initialValues={{ email: '', password: '', confirm: '' }}
       onSubmit={onSubmit}
-      validationSchema={LoginSchema}
+      validationSchema={RegisterSchema}
     >
       {({
         handleChange,
@@ -34,8 +42,7 @@ const LoginForm: FC = () => {
         handleSubmit,
         values,
         errors,
-        touched,
-        setFieldValue
+        touched
       }) => (
         <>
           <TextInput
@@ -60,38 +67,36 @@ const LoginForm: FC = () => {
             value={values.password}
             error={errors.password}
             touched={touched.password}
-            onSubmitEditing={() => onSubmit(values)}
-            autoComplete='password'
+            autoComplete='password-new'
+            autoCapitalize='none'
+            returnKeyType='next'
+            returnKeyLabel='next'
+            secureTextEntry
+          />
+          <Box height={theme.spacing.ml} />
+          <TextInput
+            icon='https'
+            placeholder='Confirm your password'
+            onChangeText={handleChange('confirm')}
+            onBlur={handleBlur('confirm')}
+            value={values.confirm}
+            error={errors.confirm}
+            touched={touched.confirm}
+            autoComplete='password-new'
             autoCapitalize='none'
             returnKeyType='send'
             returnKeyLabel='go'
             secureTextEntry
+            onSubmitEditing={() => onSubmit(values)}
           />
           <Box
-            flexDirection='row'
-            justifyContent='space-between'
             alignItems='center'
-          >
-            <Checkbox
-              label='Remember me'
-              value={values.remember}
-              onValueChange={() => setFieldValue('remember', !values.remember)}
-            />
-            <Button
-              variant='transparent'
-              onPress={() => navigate('ForgotPass')}
-            >
-              <Text color='lightBlue'>Forgot password</Text>
-            </Button>
-          </Box>
-          <Box
-            alignItems='center'
-            marginTop='m'
+            marginTop='l'
           >
             <Button
               variant='primary'
               onPress={handleSubmit}
-              label='Log into your account'
+              label='Create your account'
             />
           </Box>
         </>
@@ -100,5 +105,5 @@ const LoginForm: FC = () => {
   )
 }
 
-export default LoginForm
+export default RegisterForm
 
