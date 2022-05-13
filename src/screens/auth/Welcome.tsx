@@ -1,7 +1,6 @@
-import { useNavigation }                 from '@react-navigation/native'
 import React, { FC }                     from 'react'
 import { Dimensions, Image, StyleSheet } from 'react-native'
-import { AuthScreenRouteProp }           from '../../types'
+import { useNavigation }                 from '../../hooks'
 import { Box, Button, Text }             from '../../ui'
 
 interface WelcomeProps {
@@ -12,7 +11,7 @@ const { height } = Dimensions.get('window')
 
 const Welcome: FC<WelcomeProps> = () => {
 
-  const { navigate } = useNavigation<AuthScreenRouteProp>()
+  const { navigate } = useNavigation()
 
   return (
     <Box

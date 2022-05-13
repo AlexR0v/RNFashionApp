@@ -1,67 +1,27 @@
-import { useTheme }                                                 from '@shopify/restyle'
-import React, { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
-import { KeyboardTypeOptions, TextInput, TextInputProps }           from 'react-native'
-import Icon                                                         from 'react-native-vector-icons/MaterialIcons'
-import { Box }                                                      from '../index'
-import { Theme }                                                    from '../theme/theme'
+import { useTheme }                  from '@shopify/restyle'
+import React, { FC }                 from 'react'
+import { TextInput, TextInputProps } from 'react-native'
+import Icon                          from 'react-native-vector-icons/MaterialIcons'
+import { Box }                       from '../index'
+import { Theme }                     from '../theme/theme'
 
 interface UiTextInputProps extends TextInputProps {
-  placeholder?: string
   icon?: string
-  validator: (input: string) => boolean
-  value: string
-  changeValue: Dispatch<SetStateAction<string>>
-  keyboardType?: KeyboardTypeOptions
+  error?: string | undefined
+  touched?: boolean | undefined
 }
 
-const isValid = true
-const isInvalid = false
-const Pristine = null
-
-type InputState = typeof isValid | typeof isInvalid | typeof Pristine
-
-const UiTextInput: FC<UiTextInputProps> = ({
-  placeholder,
-  icon,
-  validator,
-  value,
-  changeValue,
-  keyboardType,
-  ...props
-}) => {
-
-  const [valid, setValid] = useState<InputState>(Pristine)
+const UiTextInput: FC<UiTextInputProps> = ({ icon, error, touched, ...props }) => {
 
   const theme: Theme = useTheme()
 
-  const color = valid === isInvalid ? theme.colors.red : valid === isValid
+  const color = error ? theme.colors.red : touched
     ? theme.colors.lightBlue
     : theme.colors.lightGray
 
-  const colorTheme = valid === isInvalid ? 'red' : valid === isValid
+  const colorTheme = error ? 'red' : touched
     ? 'lightBlue'
     : 'lightGray'
-
-  const onChangeValue = (value: string) => {
-    setValid(Pristine)
-    changeValue(value)
-  }
-
-  const validate = (value: string) => {
-    if (validator(value)) {
-      setValid(isValid)
-    } else {
-      setValid(isInvalid)
-    }
-  }
-
-  useEffect(() => {
-    if (validator(value)) {
-      setValid(isValid)
-    } else {
-      setValid(Pristine)
-    }
-  }, [value])
 
   return (
     <Box
@@ -80,18 +40,13 @@ const UiTextInput: FC<UiTextInputProps> = ({
         />
       </Box>
       <TextInput
-        value={value}
-        onChangeText={onChangeValue}
         underlineColorAndroid='transparent'
-        placeholder={placeholder}
         placeholderTextColor={theme.colors.lightGray}
-        style={{ flex: 1 }}
-        keyboardType={keyboardType}
-        onBlur={() => validate(value)}
+        style={{ flex: 1, color: theme.colors.black }}
         {...props}
       />
       {
-        (valid === isValid || valid === isInvalid) && (
+        touched && (
           <Box
             height={theme.borderRadii.m * 2}
             width={theme.borderRadii.m * 2}
@@ -106,7 +61,7 @@ const UiTextInput: FC<UiTextInputProps> = ({
             margin='s'
           >
             <Icon
-              name={valid === isValid ? 'check' : 'close'}
+              name={!error ? 'check' : 'close'}
               size={16}
               color={color}
             />

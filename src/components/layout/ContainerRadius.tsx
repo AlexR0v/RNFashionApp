@@ -1,7 +1,8 @@
-import React, { FC, useEffect, useState }                     from 'react'
-import { Dimensions, Image, Keyboard, StatusBar, StyleSheet } from 'react-native'
-import { useSafeAreaInsets }                                  from 'react-native-safe-area-context'
-import { Box }                                                from '../../ui'
+import React, { FC }                                from 'react'
+import { Dimensions, Image, StatusBar, StyleSheet } from 'react-native'
+import { useSafeAreaInsets }                        from 'react-native-safe-area-context'
+import { useKeyboardVisible }                       from '../../hooks'
+import { Box }                                      from '../../ui'
 
 interface ContainerRightRadiusProps {
   children: React.ReactNode
@@ -19,25 +20,7 @@ const ContainerRadius: FC<ContainerRightRadiusProps> = ({ children, footer, left
 
   const insets = useSafeAreaInsets()
 
-  const [isKeyboardVisible, setKeyboardVisible] = useState(false)
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow',
-      () => {
-        setKeyboardVisible(true)
-      }
-    )
-    const keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
-      () => {
-        setKeyboardVisible(false)
-      }
-    )
-    return () => {
-      keyboardDidHideListener.remove()
-      keyboardDidShowListener.remove()
-    }
-  }, [])
+  const isKeyboardVisible = useKeyboardVisible()
 
   return (
     <Box

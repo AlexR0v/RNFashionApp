@@ -74,7 +74,8 @@ const theme = createTheme({
     },
     defaults: {
       fontSize: 15,
-      fontFamily: 'SFProText-Regular'
+      fontFamily: 'SFProText-Regular',
+      color: 'black'
     }
   }
 })

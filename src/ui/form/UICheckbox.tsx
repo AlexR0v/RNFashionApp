@@ -1,30 +1,29 @@
-import { useTheme }            from '@shopify/restyle'
-import React, { FC, useState } from 'react'
-import { Pressable }           from 'react-native'
-import Icon                    from 'react-native-vector-icons/MaterialIcons'
-import { Box, Text }           from '../index'
-import { Theme }               from '../theme/theme'
+import React, { FC } from 'react'
+import { Pressable } from 'react-native'
+import Icon          from 'react-native-vector-icons/MaterialIcons'
+import { useTheme }  from '../../hooks'
+import { Box, Text } from '../index'
 
 interface UiCheckboxProps {
   label: string
+  value: boolean
+  onValueChange: () => void
 }
 
-const UiCheckbox: FC<UiCheckboxProps> = ({ label }) => {
+const UiCheckbox: FC<UiCheckboxProps> = ({ label, value, onValueChange }) => {
 
-  const [checked, setChecked] = useState(false)
-
-  const theme: Theme = useTheme()
+  const theme = useTheme()
 
   return (
-    <Pressable onPress={() => setChecked(prev => !prev)}>
+    <Pressable onPress={() => onValueChange()}>
       <Box flexDirection='row'>
         <Box
-          bg={checked ? 'lightBlue' : 'white'}
+          bg={value ? 'lightBlue' : 'white'}
           width={20}
           height={20}
           borderRadius='s'
           borderWidth={1}
-          borderColor={checked ? 'lightBlue' : 'lightGray'}
+          borderColor={value ? 'lightBlue' : 'lightGray'}
           marginRight='s'
         >
           <Icon
