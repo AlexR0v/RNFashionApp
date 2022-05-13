@@ -6,7 +6,8 @@ const palette = {
   lightBlue: '#2cb2b0',
   gray: 'rgba(12, 13, 52, 0.05)',
   lightGray: '#d9d9d9',
-  transparent: 'transparent'
+  transparent: 'transparent',
+  red: 'red'
 }
 
 const theme = createTheme({
@@ -16,16 +17,22 @@ const theme = createTheme({
     lightBlue: palette.lightBlue,
     lightGray: palette.lightGray,
     gray: palette.gray,
-    transparent: palette.transparent
+    transparent: palette.transparent,
+    red: palette.red
   },
   spacing: {
     s: 8,
     m: 12,
-    l: 25,
+    ml: 16,
+    l: 24,
     xl: 40,
     '2xl': 44
   },
   borderRadii: {
+    none: 0,
+    s: 4,
+    m: 10,
+    l: 16,
     xl: 25,
     xxxl: 75
   },
@@ -62,6 +69,10 @@ const theme = createTheme({
       color: 'black'
     },
     label: {
+      fontSize: 15,
+      fontFamily: 'SFProText-Regular'
+    },
+    defaults: {
       fontSize: 15,
       fontFamily: 'SFProText-Regular'
     }

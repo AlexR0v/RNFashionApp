@@ -6,11 +6,12 @@ type Variant = 'default' | 'primary' | 'transparent'
 
 interface UiButtonProps {
   variant: Variant
-  label: string
+  label?: string
   onPress: () => void
+  children?: React.ReactNode
 }
 
-const UiButton: FC<UiButtonProps> = ({ label, variant, onPress }) => {
+const UiButton: FC<UiButtonProps> = ({ label, variant, onPress, children }) => {
 
   const backgroundColor = variant === 'primary' ? 'lightBlue' : variant === 'transparent' ? 'transparent' : 'gray'
   const color = variant === 'primary' ? 'white' : 'black'
@@ -25,10 +26,14 @@ const UiButton: FC<UiButtonProps> = ({ label, variant, onPress }) => {
         justifyContent='center'
         alignItems='center'
       >
-        <Text
-          variant='label'
-          color={color}
-        >{label}</Text>
+        {
+          label ?
+            <Text
+              variant='label'
+              color={color}
+            >{label}</Text> :
+            children
+        }
       </Box>
     </Pressable>
   )

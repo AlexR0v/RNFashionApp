@@ -2,6 +2,7 @@ import { NavigationContainer }                              from '@react-navigat
 import { createNativeStackNavigator }                       from '@react-navigation/native-stack'
 import { ThemeProvider }                                    from '@shopify/restyle'
 import React, { FC }                                        from 'react'
+import { SafeAreaProvider }                                 from 'react-native-safe-area-context'
 import { ForgotPass, Login, Onboarding, Register, Welcome } from './screens'
 import { AuthStackParamList }                               from './types'
 import { theme }                                            from './ui'
@@ -45,7 +46,9 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <NavigationContainer>
-        <AuthNavigator />
+        <SafeAreaProvider>
+          <AuthNavigator />
+        </SafeAreaProvider>
       </NavigationContainer>
     </ThemeProvider>
   )
