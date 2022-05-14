@@ -1,4 +1,5 @@
-import { useNavigation as useNav } from '@react-navigation/native'
-import { AuthScreenRouteProp }     from '../types'
+import { useNavigation as useNav }                  from '@react-navigation/native'
+import { AuthScreenRouteProp, HomeScreenRouteProp } from '../types'
 
-export const useNavigation = () => useNav<AuthScreenRouteProp>()
+export const useNavigationAuth = () => useNav<AuthScreenRouteProp>()
+export const useNavigationHome = () => useNav<HomeScreenRouteProp>()

@@ -1,8 +1,9 @@
-import { Formik }                 from 'formik'
-import React, { FC }              from 'react'
-import * as Yup                   from 'yup'
-import { useTheme }               from '../../hooks'
-import { Box, Button, TextInput } from '../../ui'
+import { Formik }                   from 'formik'
+import React, { FC, useRef }        from 'react'
+import { TextInput as RNTextInput } from 'react-native'
+import * as Yup                     from 'yup'
+import { useTheme }                 from '../../hooks'
+import { Box, Button, TextInput }   from '../../ui'
 
 const RegisterSchema = Yup.object().shape({
   password: Yup.string()
@@ -25,6 +26,9 @@ const RegisterSchema = Yup.object().shape({
 const RegisterForm: FC = () => {
 
   const theme = useTheme()
+
+  const passInput = useRef<RNTextInput>(null)
+  const confirmPassInput = useRef<RNTextInput>(null)
 
   const onSubmit = (value: any) => {
     console.log(value)
@@ -57,9 +61,11 @@ const RegisterForm: FC = () => {
             autoCapitalize='none'
             returnKeyType='next'
             returnKeyLabel='next'
+            onSubmitEditing={() => passInput?.current?.focus()}
           />
           <Box height={theme.spacing.ml} />
           <TextInput
+            ref={passInput}
             icon='https'
             placeholder='Enter your password'
             onChangeText={handleChange('password')}
@@ -72,9 +78,11 @@ const RegisterForm: FC = () => {
             returnKeyType='next'
             returnKeyLabel='next'
             secureTextEntry
+            onSubmitEditing={() => confirmPassInput?.current?.focus()}
           />
           <Box height={theme.spacing.ml} />
           <TextInput
+            ref={confirmPassInput}
             icon='https'
             placeholder='Confirm your password'
             onChangeText={handleChange('confirm')}
@@ -87,7 +95,11 @@ const RegisterForm: FC = () => {
             returnKeyType='send'
             returnKeyLabel='go'
             secureTextEntry
-            onSubmitEditing={() => onSubmit(values)}
+            onSubmitEditing={() => {
+              if (!errors.email && !errors.password && !errors.confirm) {
+                onSubmit(values)
+              }
+            }}
           />
           <Box
             alignItems='center'

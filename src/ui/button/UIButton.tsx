@@ -1,6 +1,6 @@
-import React, { FC } from 'react'
-import { Pressable } from 'react-native'
-import { Box, Text } from '../index'
+import React, { FC }                    from 'react'
+import { ActivityIndicator, Pressable } from 'react-native'
+import { Box, Text }                    from '../index'
 
 type Variant = 'default' | 'primary' | 'transparent'
 
@@ -9,15 +9,16 @@ interface UiButtonProps {
   label?: string
   onPress: () => void
   children?: React.ReactNode
+  loading?: boolean
 }
 
-const UiButton: FC<UiButtonProps> = ({ label, variant, onPress, children }) => {
+const UiButton: FC<UiButtonProps> = ({ label, loading, variant, onPress, children }) => {
 
   const backgroundColor = variant === 'primary' ? 'lightBlue' : variant === 'transparent' ? 'transparent' : 'gray'
   const color = variant === 'primary' ? 'white' : 'black'
 
   return (
-    <Pressable {...{ onPress }}>
+    <Pressable onPress={() => loading ? null : onPress()}>
       <Box
         bg={backgroundColor}
         height={50}
@@ -27,12 +28,18 @@ const UiButton: FC<UiButtonProps> = ({ label, variant, onPress, children }) => {
         alignItems='center'
       >
         {
-          label ?
-            <Text
-              variant='label'
-              color={color}
-            >{label}</Text> :
-            children
+          loading ?
+            <ActivityIndicator /> :
+            <>
+              {
+                label ?
+                  <Text
+                    variant='label'
+                    color={color}
+                  >{label}</Text> :
+                  children
+              }
+            </>
         }
       </Box>
     </Pressable>

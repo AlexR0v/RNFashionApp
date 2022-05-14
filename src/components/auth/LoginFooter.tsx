@@ -1,5 +1,6 @@
 import React, { FC }         from 'react'
-import { useNavigation }     from '../../hooks'
+import { Linking }           from 'react-native'
+import { useNavigationAuth } from '../../hooks'
 import { Box, Button, Text } from '../../ui'
 import { SocialLogin }       from '../index'
 
@@ -7,18 +8,19 @@ interface LoginFooterProps {
   navPage: 'Register' | 'Login',
   whiteText: string
   blueText: string
+  link?: string
 }
 
-const LoginFooter: FC<LoginFooterProps> = ({ navPage, whiteText, blueText }) => {
+const LoginFooter: FC<LoginFooterProps> = ({ navPage, whiteText, blueText, link }) => {
 
-  const { navigate } = useNavigation()
+  const { navigate } = useNavigationAuth()
 
   return (
     <>
       <SocialLogin />
       <Button
         variant='transparent'
-        onPress={() => navigate(navPage)}
+        onPress={() => link ? Linking.openURL(link) : navigate(navPage)}
       >
         <Box
           flexDirection='row'

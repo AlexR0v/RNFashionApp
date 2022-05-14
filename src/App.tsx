@@ -1,43 +1,28 @@
-import { NavigationContainer }                              from '@react-navigation/native'
-import { createNativeStackNavigator }                       from '@react-navigation/native-stack'
-import { ThemeProvider }                                    from '@shopify/restyle'
-import React, { FC }                                        from 'react'
-import { SafeAreaProvider }                                 from 'react-native-safe-area-context'
-import { ForgotPass, Login, Onboarding, Register, Welcome } from './screens'
-import { AuthStackParamList }                               from './types'
-import { theme }                                            from './ui'
+import { NavigationContainer }          from '@react-navigation/native'
+import { createNativeStackNavigator }   from '@react-navigation/native-stack'
+import { ThemeProvider }                from '@shopify/restyle'
+import React                            from 'react'
+import { SafeAreaProvider }             from 'react-native-safe-area-context'
+import { AuthNavigator, HomeNavigator } from './screens'
+import { AppStackParamList }            from './types'
+import { theme }                        from './ui'
 
-const AuthStack = createNativeStackNavigator<AuthStackParamList>()
+const AppStack = createNativeStackNavigator<AppStackParamList>()
 
-const AuthNavigator: FC = () => {
+const AppNavigator = () => {
   return (
-    <AuthStack.Navigator>
-      <AuthStack.Screen
-        name='Onboarding'
-        component={Onboarding}
+    <AppStack.Navigator>
+      <AppStack.Screen
+        name='Auth'
+        component={AuthNavigator}
         options={{ headerShown: false }}
       />
-      <AuthStack.Screen
-        name='Welcome'
-        component={Welcome}
+      <AppStack.Screen
+        name='Home'
+        component={HomeNavigator}
         options={{ headerShown: false }}
       />
-      <AuthStack.Screen
-        name='Login'
-        component={Login}
-        options={{ headerShown: false }}
-      />
-      <AuthStack.Screen
-        name='Register'
-        component={Register}
-        options={{ headerShown: false }}
-      />
-      <AuthStack.Screen
-        name='ForgotPass'
-        component={ForgotPass}
-        options={{ headerShown: false }}
-      />
-    </AuthStack.Navigator>
+    </AppStack.Navigator>
   )
 }
 
@@ -47,7 +32,7 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <NavigationContainer>
         <SafeAreaProvider>
-          <AuthNavigator />
+          <AppNavigator />
         </SafeAreaProvider>
       </NavigationContainer>
     </ThemeProvider>

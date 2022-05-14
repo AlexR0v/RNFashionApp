@@ -4,6 +4,7 @@ const palette = {
   black: '#0c0d34',
   white: '#ffffff',
   lightBlue: '#2cb2b0',
+  lightBlueOpacity: 'rgba(44,178,176,0.31)',
   gray: 'rgba(12, 13, 52, 0.05)',
   lightGray: '#d9d9d9',
   transparent: 'transparent',
@@ -18,7 +19,8 @@ const theme = createTheme({
     lightGray: palette.lightGray,
     gray: palette.gray,
     transparent: palette.transparent,
-    red: palette.red
+    red: palette.red,
+    lightBlueOpacity: palette.lightBlueOpacity
   },
   spacing: {
     s: 8,

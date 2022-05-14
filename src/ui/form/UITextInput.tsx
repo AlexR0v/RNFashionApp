@@ -1,5 +1,5 @@
 import { useTheme }                  from '@shopify/restyle'
-import React, { FC }                 from 'react'
+import React, { forwardRef }         from 'react'
 import { TextInput, TextInputProps } from 'react-native'
 import Icon                          from 'react-native-vector-icons/MaterialIcons'
 import { Box }                       from '../index'
@@ -11,7 +11,7 @@ interface UiTextInputProps extends TextInputProps {
   touched?: boolean | undefined
 }
 
-const UiTextInput: FC<UiTextInputProps> = ({ icon, error, touched, ...props }) => {
+const UiTextInput = forwardRef<TextInput, UiTextInputProps>(({ icon, error, touched, ...props }, ref) => {
 
   const theme: Theme = useTheme()
 
@@ -40,6 +40,7 @@ const UiTextInput: FC<UiTextInputProps> = ({ icon, error, touched, ...props }) =
         />
       </Box>
       <TextInput
+        ref={ref}
         underlineColorAndroid='transparent'
         placeholderTextColor={theme.colors.lightGray}
         style={{ flex: 1, color: theme.colors.black }}
@@ -70,7 +71,7 @@ const UiTextInput: FC<UiTextInputProps> = ({ icon, error, touched, ...props }) =
       }
     </Box>
   )
-}
+})
 
 export default UiTextInput
 

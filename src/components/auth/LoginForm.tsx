@@ -1,8 +1,10 @@
 import { Formik }                                 from 'formik'
-import React, { FC }                              from 'react'
+import React, { FC, useRef, useState }            from 'react'
+import { TextInput as RNTextInput }               from 'react-native'
 import * as Yup                                   from 'yup'
-import { useNavigation, useTheme }                from '../../hooks'
+import { useNavigationAuth, useTheme }            from '../../hooks'
 import { Box, Button, Checkbox, Text, TextInput } from '../../ui'
+import { sleep }                                  from '../../utils/sleep'
 
 const LoginSchema = Yup.object().shape({
   password: Yup.string()
@@ -14,12 +16,20 @@ const LoginSchema = Yup.object().shape({
 
 const LoginForm: FC = () => {
 
-  const { navigate } = useNavigation()
+  const { navigate } = useNavigationAuth()
 
   const theme = useTheme()
 
-  const onSubmit = (value: any) => {
+  const passInput = useRef<RNTextInput>(null)
+
+  const [loading, setLoading] = useState(false)
+
+  const onSubmit = async (value: any) => {
+    setLoading(true)
     console.log(value)
+    await sleep(3000)
+    setLoading(false)
+    navigate('Home')
   }
 
   return (
@@ -50,9 +60,11 @@ const LoginForm: FC = () => {
             autoCapitalize='none'
             returnKeyType='next'
             returnKeyLabel='next'
+            onSubmitEditing={() => passInput?.current?.focus()}
           />
           <Box height={theme.spacing.ml} />
           <TextInput
+            ref={passInput}
             icon='https'
             placeholder='Enter your password'
             onChangeText={handleChange('password')}
@@ -60,7 +72,11 @@ const LoginForm: FC = () => {
             value={values.password}
             error={errors.password}
             touched={touched.password}
-            onSubmitEditing={() => onSubmit(values)}
+            onSubmitEditing={() => {
+              if (!errors.email && !errors.password) {
+                onSubmit(values)
+              }
+            }}
             autoComplete='password'
             autoCapitalize='none'
             returnKeyType='send'
@@ -89,6 +105,7 @@ const LoginForm: FC = () => {
             marginTop='m'
           >
             <Button
+              loading={loading}
               variant='primary'
               onPress={handleSubmit}
               label='Log into your account'

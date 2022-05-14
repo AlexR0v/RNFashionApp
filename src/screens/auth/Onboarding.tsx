@@ -1,4 +1,3 @@
-import { useNavigation }                       from '@react-navigation/native'
 import React, { FC, useRef }                   from 'react'
 import { Dimensions, Image, StyleSheet, View } from 'react-native'
 import Animated, {
@@ -11,7 +10,7 @@ import Animated, {
 }                                              from 'react-native-reanimated'
 import { Dot, Slide, Subslide }                from '../../components/onboarding'
 import { SLIDE_HEIGHT }                        from '../../components/onboarding/Slide'
-import { AuthScreenRouteProp }                 from '../../types'
+import { useNavigationAuth }                   from '../../hooks'
 import { Box }                                 from '../../ui'
 
 const BORDER_RADIUS = 75
@@ -55,7 +54,7 @@ const slides = [
 
 const Onboarding: FC = () => {
 
-  const { navigate } = useNavigation<AuthScreenRouteProp>()
+  const { navigate } = useNavigationAuth()
 
   const scrollRef = useRef<Animated.ScrollView>(null)
   const x = useSharedValue(0)
