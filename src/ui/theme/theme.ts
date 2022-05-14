@@ -8,7 +8,11 @@ const palette = {
   gray: 'rgba(12, 13, 52, 0.05)',
   lightGray: '#d9d9d9',
   transparent: 'transparent',
-  red: 'red'
+  red: 'red',
+  yellow: 'yellow',
+  pink: 'pink',
+  violet: 'violet',
+  orange: 'orange'
 }
 
 const theme = createTheme({
@@ -20,6 +24,10 @@ const theme = createTheme({
     gray: palette.gray,
     transparent: palette.transparent,
     red: palette.red,
+    orange: palette.orange,
+    yellow: palette.yellow,
+    pink: palette.pink,
+    violet: palette.violet,
     lightBlueOpacity: palette.lightBlueOpacity
   },
   spacing: {

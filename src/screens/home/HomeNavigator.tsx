@@ -1,8 +1,10 @@
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import React, { FC }             from 'react'
+import { HomeStackParamList }    from '../../types'
 import { Box, Text }             from '../../ui'
+import Drawer, { DRAWER_WIDTH }  from './Drawer'
 
-const Drawer = createDrawerNavigator()
+const HomeDrawer = createDrawerNavigator<HomeStackParamList>()
 
 const HomeScreen = () => {
   return (
@@ -14,12 +16,19 @@ const HomeScreen = () => {
 
 const HomeNavigator: FC = () => {
   return (
-    <Drawer.Navigator>
-      <Drawer.Screen
-        name='HomeScreen'
+    <HomeDrawer.Navigator
+      screenOptions={{
+        headerShown: false, drawerStyle: {
+          width: DRAWER_WIDTH
+        }
+      }}
+      drawerContent={props => <Drawer {...props} />}
+    >
+      <HomeDrawer.Screen
+        name='OutfitIdeas'
         component={HomeScreen}
       />
-    </Drawer.Navigator>
+    </HomeDrawer.Navigator>
   )
 }
 

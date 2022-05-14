@@ -37,7 +37,7 @@ const ContainerRadius: FC<ContainerRightRadiusProps> = ({ children, center, foot
             <Image
               style={{ width, height }}
               source={require(
-                '../../assets/img/vecteezy_abstract-colorful-geometric-background-3d-effect-trendy-colors_.jpg')}
+                '../../assets/img/1580821161_3-p-foni-s-kruzhochkami-5.jpeg')}
             />
           </Box>
         </Box>
@@ -46,9 +46,9 @@ const ContainerRadius: FC<ContainerRightRadiusProps> = ({ children, center, foot
           overflow='hidden'
         >
           <Image
-            style={{ ...StyleSheet.absoluteFillObject, width, height, top: -height * 0.61 }}
+            style={{ ...StyleSheet.absoluteFillObject, width, height, top: -height * 0.5 }}
             source={require(
-              '../../assets/img/vecteezy_abstract-colorful-geometric-background-3d-effect-trendy-colors_.jpg')}
+              '../../assets/img/1580821161_3-p-foni-s-kruzhochkami-5.jpeg')}
           />
           <Box
             borderRadius='xxxl'

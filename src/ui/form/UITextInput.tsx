@@ -1,7 +1,7 @@
 import { useTheme }                  from '@shopify/restyle'
 import React, { forwardRef }         from 'react'
 import { TextInput, TextInputProps } from 'react-native'
-import Icon                          from 'react-native-vector-icons/MaterialIcons'
+import { Icon }                      from '../icons'
 import { Box }                       from '../index'
 import { Theme }                     from '../theme/theme'
 
@@ -34,6 +34,7 @@ const UiTextInput = forwardRef<TextInput, UiTextInputProps>(({ icon, error, touc
     >
       <Box margin='s'>
         <Icon
+          type='material'
           name={icon || ''}
           size={16}
           color={color}
@@ -62,6 +63,7 @@ const UiTextInput = forwardRef<TextInput, UiTextInputProps>(({ icon, error, touc
             margin='s'
           >
             <Icon
+              type='material'
               name={!error ? 'check' : 'close'}
               size={16}
               color={color}

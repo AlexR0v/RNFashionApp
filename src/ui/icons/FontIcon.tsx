@@ -1,19 +1,32 @@
 import React, { FC } from 'react'
+import getIconType   from '../../utils/getIconType'
 
 interface FontIconProps {
-  type: 'materials_icons'
+  type: IconType
   name: string
   color?: string
   size?: number
 }
 
-const types = {
-  'materials_icons': require('react-native-vector-icons/MaterialIcons')
-}
+export type IconType =
+  | 'material'
+  | 'material-community'
+  | 'simple-line-icon'
+  | 'zocial'
+  | 'font-awesome'
+  | 'octicon'
+  | 'ionicon'
+  | 'foundation'
+  | 'evilicon'
+  | 'entypo'
+  | 'antdesign'
+  | 'font-awesome-5'
+  | 'feather'
+  | 'fontisto'
 
 const FontIcon: FC<FontIconProps> = ({ type, name, color, size }) => {
 
-  const Icon = types[type]
+  const Icon = getIconType(type)
 
   return (
     <Icon

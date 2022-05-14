@@ -10,18 +10,24 @@ import { theme }                        from './ui'
 const AppStack = createNativeStackNavigator<AppStackParamList>()
 
 const AppNavigator = () => {
+
+  const isLogin = true
+
   return (
     <AppStack.Navigator>
-      <AppStack.Screen
-        name='Auth'
-        component={AuthNavigator}
-        options={{ headerShown: false }}
-      />
-      <AppStack.Screen
-        name='Home'
-        component={HomeNavigator}
-        options={{ headerShown: false }}
-      />
+      {
+        isLogin ?
+          <AppStack.Screen
+            name='Home'
+            component={HomeNavigator}
+            options={{ headerShown: false }}
+          /> :
+          <AppStack.Screen
+            name='Auth'
+            component={AuthNavigator}
+            options={{ headerShown: false }}
+          />
+      }
     </AppStack.Navigator>
   )
 }
