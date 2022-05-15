@@ -15,22 +15,24 @@ export type AppStackParamList = {
 }
 
 export type HomeStackParamList = {
-  OutfitIdeas: undefined
-  FavoriteOutfits: undefined
-  EditProfile: undefined
-  TransactionsHistory: undefined
-  NotificationsSettings: undefined
-  Logout: undefined
+  'Outfit Ideas': undefined
+  'Favorite Outfits': undefined
+  'Edit Profile': undefined
+  'Transactions History': undefined
+  'Notifications Settings': undefined
+  Auth: undefined
+  Cart: undefined
 }
 
 export type AuthScreenRouteProp = CompositeNavigationProp<NavigationProp<AuthStackParamList, 'Welcome' | 'Login' | 'ForgotPass' | 'Onboarding' | 'Register'>,
   NavigationProp<AppStackParamList, 'Auth' | 'Home'>>
 
 export type HomeScreenRouteProp = CompositeNavigationProp<NavigationProp<HomeStackParamList,
-  'OutfitIdeas' |
-  'EditProfile' |
-  'TransactionsHistory' |
-  'NotificationsSettings' |
-  'Logout' |
-  'FavoriteOutfits'>,
+  'Outfit Ideas' |
+  'Edit Profile' |
+  'Transactions History' |
+  'Notifications Settings' |
+  'Auth' |
+  'Cart' |
+  'Favorite Outfits'>,
   NavigationProp<AppStackParamList, 'Auth' | 'Home'>>
